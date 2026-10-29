@@ -1,0 +1,166 @@
+/* ============================================================
+   DESIGN TOKENS — Jade Portfolio
+   三層繼承架構：Reference → System → Component
+   修改原則：只改 ref 層，sys/comp 自動繼承更新
+   ============================================================ */
+
+:root {
+
+  /* ── REF: Color Palette ── */
+  --ref-palette-navy0:    #080C22;
+  --ref-palette-navy10:   #0A0F2A;
+  --ref-palette-navy20:   #0D1540;
+  --ref-palette-blue40:   #0F3BB8;
+  --ref-palette-blue50:   #1A4FE0;
+  --ref-palette-cyan80:   #00C8FF;
+  --ref-palette-cyan90:   #4DD9FF;
+  --ref-palette-cyan95:   #9EEAFF;
+  --ref-palette-white100: #FFFFFF;
+  --ref-palette-red40:    #E8003A;
+
+  /* ── REF: Spacing (8px grid) ── */
+  --ref-spacing-4:  4px;
+  --ref-spacing-8:  8px;
+  --ref-spacing-12: 12px;
+  --ref-spacing-16: 16px;
+  --ref-spacing-20: 20px;
+  --ref-spacing-24: 24px;
+  --ref-spacing-32: 32px;
+  --ref-spacing-48: 48px;
+  --ref-spacing-64: 64px;
+
+  /* ── REF: Shape ── */
+  --ref-shape-none:  0px;
+  --ref-shape-micro: 2px;
+
+  /* ── REF: Duration ── */
+  --ref-duration-80:  80ms;
+  --ref-duration-150: 150ms;
+  --ref-duration-200: 200ms;
+  --ref-duration-400: 400ms;
+  --ref-duration-600: 600ms;
+
+  /* ── REF: Easing ── */
+  --ref-easing-snap:        steps(1);
+  --ref-easing-expressive:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ref-easing-standard:    cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── REF: Typeface ── */
+  --ref-typeface-display: 'Barlow Condensed', sans-serif;
+  --ref-typeface-body:    'Barlow', sans-serif;
+  --ref-typeface-cjk:     'Noto Sans TC', sans-serif;
+
+
+  /* ══════════════════════════════════════════════
+     SYSTEM TOKENS
+     ══════════════════════════════════════════════ */
+
+  /* ── SYS: Color ── */
+  --sys-color-background:           var(--ref-palette-navy10);
+  --sys-color-surface:              var(--ref-palette-navy20);
+  --sys-color-surface-variant:      var(--ref-palette-blue40);
+  --sys-color-primary:              var(--ref-palette-cyan80);
+  --sys-color-primary-soft:         var(--ref-palette-cyan95);
+  --sys-color-on-bg:                var(--ref-palette-white100);
+  --sys-color-on-surface-secondary: rgba(255, 255, 255, 0.65);
+  --sys-color-on-surface-muted:     rgba(255, 255, 255, 0.40);
+  --sys-color-on-surface-ghost:     rgba(255, 255, 255, 0.08);
+  --sys-color-outline:              rgba(255, 255, 255, 0.07);
+  --sys-color-divider:              var(--ref-palette-cyan80);
+  --sys-color-error:                var(--ref-palette-red40);
+
+  /* ── SYS: Spacing ── */
+  --sys-gap-xs:      var(--ref-spacing-4);
+  --sys-gap-sm:      var(--ref-spacing-8);
+  --sys-gap-md:      var(--ref-spacing-16);
+  --sys-gap-lg:      var(--ref-spacing-24);
+  --sys-gap-xl:      var(--ref-spacing-32);
+  --sys-padding-sm:  var(--ref-spacing-16);
+  --sys-padding-md:  var(--ref-spacing-24);
+  --sys-padding-lg:  var(--ref-spacing-48);
+  --sys-padding-xl:  var(--ref-spacing-64);
+
+  /* ── SYS: Shape ── */
+  --sys-shape-sharp:  var(--ref-shape-none);
+  --sys-shape-accent: var(--ref-shape-micro);
+
+  /* ── SYS: Motion ── */
+  --sys-motion-snap:          var(--ref-duration-80) steps(1);
+  --sys-motion-fast:          var(--ref-duration-150) cubic-bezier(0.4, 0, 0.2, 1);
+  --sys-motion-base:          var(--ref-duration-200) cubic-bezier(0.22, 1, 0.36, 1);
+  --sys-motion-enter:         var(--ref-duration-400) cubic-bezier(0.4, 0, 0.2, 1);
+  --sys-motion-scene:         var(--ref-duration-600) cubic-bezier(0.4, 0, 0.2, 1);
+  --sys-motion-stagger-delay: var(--ref-duration-80);
+
+  /* ── SYS: Typeface ── */
+  --sys-font-display: var(--ref-typeface-display);
+  --sys-font-body:    var(--ref-typeface-body);
+  --sys-font-cjk:     var(--ref-typeface-cjk);
+
+
+  /* ══════════════════════════════════════════════
+     COMPONENT TOKENS
+     ══════════════════════════════════════════════ */
+
+  /* ── COMP: Primary Button ── */
+  --comp-btn-primary-bg:                  var(--sys-color-primary);
+  --comp-btn-primary-label-color:         var(--sys-color-background);
+  --comp-btn-primary-shape:               var(--sys-shape-sharp);
+  --comp-btn-primary-height:              36px;
+  --comp-btn-primary-padding-x:           var(--sys-gap-md);
+  --comp-btn-primary-transition:          var(--sys-motion-fast);
+  --comp-btn-primary-hover-bg:            var(--sys-color-primary-soft);
+  --comp-btn-primary-hover-label-color:   var(--sys-color-background);
+  --comp-btn-primary-pressed-scale:       0.96;
+  --comp-btn-primary-pressed-opacity:     0.75;
+  --comp-btn-primary-focus-ring-color:    var(--sys-color-primary);
+  --comp-btn-primary-focus-ring-offset:   2px;
+  --comp-btn-primary-disabled-bg:         rgba(255, 255, 255, 0.08);
+  --comp-btn-primary-disabled-label-color:rgba(255, 255, 255, 0.30);
+
+  /* ── COMP: Nav Item ── */
+  --comp-nav-active-bg:     var(--sys-color-primary);
+  --comp-nav-active-label:  var(--sys-color-background);
+  --comp-nav-label:         var(--sys-color-on-surface-secondary);
+  --comp-nav-item-height:   36px;
+  --comp-nav-item-px:       var(--sys-gap-sm);
+  --comp-nav-shape:         var(--sys-shape-sharp);
+  --comp-nav-cursor-motion: var(--sys-motion-snap);
+
+  /* ── COMP: Work Card ── */
+  --comp-card-bg:        var(--sys-color-surface);
+  --comp-card-border:    var(--sys-color-outline);
+  --comp-card-shape:     var(--sys-shape-sharp);
+  --comp-card-padding:   var(--sys-padding-sm);
+  --comp-card-grid-gap:  var(--sys-gap-xl);
+
+  /* ── COMP: Category Badge ── */
+  --comp-badge-bg:     var(--sys-color-primary);
+  --comp-badge-label:  var(--sys-color-background);
+  --comp-badge-shape:  var(--sys-shape-sharp);
+  --comp-badge-px:     var(--sys-gap-sm);
+  --comp-badge-py:     var(--sys-gap-xs);
+
+  /* ── COMP: Filter Tab ── */
+  --comp-filter-active-bg:       var(--sys-color-primary);
+  --comp-filter-active-label:    var(--sys-color-background);
+  --comp-filter-inactive-label:  var(--sys-color-on-surface-secondary);
+  --comp-filter-shape:           var(--sys-shape-accent);
+
+  /* ── COMP: Date Display ── */
+  --comp-date-label-color:  var(--sys-color-on-surface-muted);
+  --comp-date-value-color:  var(--sys-color-on-bg);
+  --comp-date-accent-color: var(--sys-color-primary);
+
+  /* ── COMP: Diagonal Panel ── */
+  --comp-panel-dark-bg:   var(--sys-color-background);
+  --comp-panel-light-bg:  var(--sys-color-surface-variant);
+  --comp-panel-ratio:     45%;
+
+  /* ── COMP: Ghost Text ── */
+  --comp-ghost-text-color: var(--sys-color-on-surface-ghost);
+
+  /* ── COMP: Section Layout ── */
+  --comp-section-px: var(--sys-padding-lg);
+  --comp-section-py: var(--sys-padding-xl);
+}

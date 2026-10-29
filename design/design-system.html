@@ -1,0 +1,1559 @@
+<title>JADE Design System</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800;1,900&family=Barlow:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+
+<style>
+/* ============================================================
+   JADE PORTFOLIO — Design System Document
+   Layout: Dark-first, split-panel with diagonal motif
+   ============================================================ */
+
+/* — Reference Tokens — */
+:root {
+  --ref-navy-900: #080C22;
+  --ref-navy-800: #0A0F2A;
+  --ref-navy-700: #0D1540;
+  --ref-blue-600: #0F3BB8;
+  --ref-blue-500: #1A4FE0;
+  --ref-blue-400: #2260F5;
+  --ref-cyan-400: #00C8FF;
+  --ref-cyan-300: #4DD9FF;
+  --ref-cyan-200: #9EEAFF;
+  --ref-white: #FFFFFF;
+  --ref-red-500: #E8003A;
+
+  /* — Semantic Tokens — */
+  --sys-bg-primary: var(--ref-navy-800);
+  --sys-bg-secondary: var(--ref-blue-600);
+  --sys-bg-card: var(--ref-navy-700);
+  --sys-color-accent: var(--ref-cyan-400);
+  --sys-color-accent-soft: var(--ref-cyan-200);
+  --sys-color-text-primary: var(--ref-white);
+  --sys-color-text-ghost: rgba(255,255,255,0.10);
+  --sys-color-text-muted: rgba(255,255,255,0.40);
+  --sys-color-text-secondary: rgba(255,255,255,0.65);
+  --sys-color-divider: var(--ref-cyan-400);
+  --sys-color-danger: var(--ref-red-500);
+
+  /* — Spacing (8px grid) — */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* — Border Radius — */
+  --rad-none: 0px;
+  --rad-xs: 2px;
+
+  /* — Typography — */
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'Barlow', 'Noto Sans TC', sans-serif;
+  --font-jp: 'Noto Sans TC', sans-serif;
+
+  color-scheme: dark;
+}
+
+/* Dark-first: no light override — this design commits to dark */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--sys-bg-primary);
+  color: var(--sys-color-text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* — Doc Header — */
+.doc-header {
+  position: relative;
+  padding: var(--sp-16) var(--sp-12) var(--sp-10);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+.doc-header::before {
+  content: 'DESIGN\ASYSTEM';
+  white-space: pre;
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(80px, 14vw, 160px);
+  color: var(--sys-color-text-ghost);
+  line-height: 0.9;
+  letter-spacing: -4px;
+  pointer-events: none;
+  user-select: none;
+}
+.doc-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--sys-color-accent);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-3);
+}
+.doc-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(40px, 7vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -1px;
+  color: var(--sys-color-text-primary);
+  text-wrap: balance;
+}
+.doc-sub {
+  margin-top: var(--sp-4);
+  font-size: 14px;
+  color: var(--sys-color-text-secondary);
+  max-width: 520px;
+}
+
+/* — Section — */
+.section {
+  padding: var(--sp-12) var(--sp-12);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-8);
+}
+.section-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 11px;
+  color: var(--sys-color-accent);
+  letter-spacing: 0.12em;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+}
+
+/* — Principle Cards — */
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--sp-4);
+}
+.principle-card {
+  background: var(--sys-bg-card);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: var(--sp-6);
+  position: relative;
+  overflow: hidden;
+}
+.principle-card::before {
+  content: attr(data-num);
+  position: absolute;
+  right: -8px;
+  bottom: -16px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 88px;
+  color: rgba(255,255,255,0.05);
+  line-height: 1;
+  pointer-events: none;
+}
+.principle-tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sys-bg-primary);
+  background: var(--sys-color-accent);
+  padding: 2px var(--sp-2);
+  margin-bottom: var(--sp-4);
+}
+.principle-name-en {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--sys-color-text-primary);
+  margin-bottom: var(--sp-1);
+}
+.principle-name-zh {
+  font-size: 12px;
+  color: var(--sys-color-text-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--sp-4);
+}
+.principle-desc {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--sys-color-text-secondary);
+}
+.principle-desc strong {
+  color: var(--sys-color-text-primary);
+  font-weight: 600;
+}
+
+/* — Color Tokens — */
+.token-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+.token-group-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sys-color-text-muted);
+  margin-bottom: var(--sp-3);
+}
+.token-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+.token-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: var(--sp-2) var(--sp-4) var(--sp-2) var(--sp-2);
+}
+.token-swatch {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.token-info { display: flex; flex-direction: column; gap: 2px; }
+.token-name {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: var(--sys-color-accent);
+  letter-spacing: 0.04em;
+}
+.token-hex {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: var(--sys-color-text-primary);
+}
+.token-role {
+  font-size: 10px;
+  color: var(--sys-color-text-muted);
+}
+
+/* — Type Scale — */
+.type-scale { display: flex; flex-direction: column; gap: var(--sp-4); }
+.type-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: baseline;
+  gap: var(--sp-6);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: var(--sp-4);
+}
+.type-meta { display: flex; flex-direction: column; gap: 2px; }
+.type-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sys-color-text-muted);
+}
+.type-spec {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: var(--sys-color-accent);
+}
+
+/* — Spacing Scale — */
+.spacing-scale { display: flex; flex-direction: column; gap: var(--sp-2); }
+.sp-row {
+  display: grid;
+  grid-template-columns: 60px 180px 1fr;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-2) 0;
+}
+.sp-name {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: var(--sys-color-accent);
+}
+.sp-bar-wrap { display: flex; align-items: center; }
+.sp-bar {
+  height: 8px;
+  background: var(--sys-color-accent);
+  opacity: 0.6;
+}
+.sp-value {
+  font-size: 11px;
+  color: var(--sys-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* — Radius — */
+.radius-row {
+  display: flex;
+  gap: var(--sp-6);
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.radius-item { text-align: center; }
+.radius-box {
+  width: 64px;
+  height: 64px;
+  background: var(--sys-bg-card);
+  border: 2px solid var(--sys-color-accent);
+  margin-bottom: var(--sp-3);
+}
+.radius-label {
+  font-size: 10px;
+  color: var(--sys-color-text-muted);
+  letter-spacing: 0.1em;
+}
+.radius-value {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: var(--sys-color-text-primary);
+}
+
+/* — Anti-AI Slop note — */
+.slop-note {
+  border-left: 2px solid var(--sys-color-danger);
+  padding: var(--sp-4) var(--sp-6);
+  background: rgba(232,0,58,0.06);
+  margin-top: var(--sp-6);
+}
+.slop-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sys-color-danger);
+  margin-bottom: var(--sp-3);
+}
+.slop-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.slop-list li {
+  font-size: 13px;
+  color: var(--sys-color-text-secondary);
+  padding-left: var(--sp-5);
+  position: relative;
+}
+.slop-list li::before {
+  content: '✕';
+  position: absolute;
+  left: 0;
+  color: var(--sys-color-danger);
+  font-size: 10px;
+  top: 3px;
+}
+
+/* — Animation Demo — */
+.anim-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--sp-4);
+}
+.anim-card {
+  background: var(--sys-bg-card);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: var(--sp-6);
+}
+.anim-demo {
+  height: 80px;
+  background: var(--ref-navy-900);
+  margin-bottom: var(--sp-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+.anim-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--sys-color-text-primary);
+  margin-bottom: var(--sp-2);
+}
+.anim-spec {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: var(--sys-color-accent);
+  margin-bottom: var(--sp-3);
+}
+.anim-desc {
+  font-size: 12px;
+  color: var(--sys-color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Camera shift / scene transition */
+@keyframes cam-zoom {
+  0%   { transform: scale(1) translate(0, 0); }
+  48%  { transform: scale(1.14) translate(3%, -5%); }
+  50%  { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1) translate(0, 0); }
+}
+@keyframes text-dissolve {
+  0%, 15%  { opacity: 1; letter-spacing: 0.04em; filter: blur(0); }
+  45%      { opacity: 0; letter-spacing: 0.5em; filter: blur(3px); }
+  50%, 100%{ opacity: 0; filter: blur(0); letter-spacing: 0.04em; }
+}
+@keyframes menu-appear {
+  0%, 50%  { opacity: 0; transform: translateX(10px); }
+  60%, 100%{ opacity: 1; transform: translateX(0); }
+}
+.demo-cam-base {
+  width: 100%; height: 100%;
+  background: #0A1428;
+  position: relative;
+  overflow: hidden;
+}
+.demo-cam-bg {
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #0D1540 40%, #1A3B8A 100%);
+  animation: cam-zoom 2.4s cubic-bezier(0.4,0,0.2,1) infinite;
+  transform-origin: 60% 40%;
+}
+.demo-cam-sidebar {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--sys-color-accent);
+}
+.demo-cam-overlay-text {
+  position: absolute;
+  left: 10px; top: 50%; transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-weight: 900; font-style: italic;
+  font-size: 18px; color: white;
+  line-height: 1.0;
+  animation: text-dissolve 2.4s ease-in infinite;
+}
+.demo-cam-menu {
+  position: absolute; right: 10px; bottom: 12px;
+  display: flex; flex-direction: column; gap: 3px; text-align: right;
+  animation: menu-appear 2.4s ease-out infinite;
+}
+.demo-cam-menu-item {
+  font-family: var(--font-display);
+  font-weight: 800; font-style: italic;
+  font-size: 11px; color: white; line-height: 1.3;
+}
+
+/* Bar wipe */
+@keyframes bar-wipe {
+  0%   { transform: scaleX(0); transform-origin: left; }
+  30%  { transform: scaleX(1); transform-origin: left; }
+  70%  { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+.demo-bar-track { width: 100%; height: 100%; position: relative; display: flex; align-items: center; }
+.demo-bar-fill {
+  position: absolute;
+  width: 100%; height: 100%;
+  background: var(--ref-blue-600);
+  animation: bar-wipe 2s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+.demo-bar-label {
+  position: relative;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 20px;
+  color: white;
+  z-index: 1;
+  padding-left: 16px;
+}
+
+/* Text slam */
+@keyframes text-slam {
+  0%   { opacity: 0; transform: translateY(-12px) skewY(-2deg); }
+  15%  { opacity: 1; transform: translateY(2px) skewY(0deg); }
+  20%  { transform: translateY(0); }
+  80%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(4px); }
+}
+.demo-slam {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-style: italic;
+  font-size: 28px;
+  color: white;
+  animation: text-slam 2s cubic-bezier(0.22,1,0.36,1) infinite;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+/* Cursor snap */
+@keyframes cursor-snap {
+  0%, 45%  { transform: translateY(0); }
+  55%, 100% { transform: translateY(36px); }
+}
+.demo-menu { display: flex; flex-direction: column; gap: 0; width: 100%; padding: 0 12px; position: relative; }
+.demo-menu-item {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  position: relative;
+}
+.demo-menu-cursor {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 36px;
+  background: var(--sys-color-accent);
+  animation: cursor-snap 2s steps(1) infinite;
+  z-index: 0;
+}
+.demo-menu-item.active { color: #080C22; z-index: 1; }
+
+/* Panel content swap (GIF 3) */
+@keyframes swap-cursor {
+  0%,  24%{ transform: translateY(0px); }
+  28%, 57%{ transform: translateY(22px); }
+  61%, 90%{ transform: translateY(44px); }
+  94%,100%{ transform: translateY(66px); }
+}
+@keyframes swap-r0 { 0%,24%{opacity:1} 28%,100%{opacity:0} }
+@keyframes swap-r1 { 0%,26%{opacity:0} 28%,57%{opacity:1} 61%,100%{opacity:0} }
+@keyframes swap-r2 { 0%,59%{opacity:0} 61%,90%{opacity:1} 94%,100%{opacity:0} }
+@keyframes swap-r3 { 0%,92%{opacity:0} 94%,100%{opacity:1} }
+.demo-swap { width:100%; height:100%; display:flex; background:var(--ref-navy-900); }
+.demo-swap-left { width:55%; padding:10px 8px; position:relative; border-right:1px solid rgba(255,255,255,0.1); }
+.demo-swap-cursor { position:absolute; left:4px; right:4px; height:22px; background:var(--sys-color-accent); animation:swap-cursor 2.4s steps(1) infinite; top:10px; }
+.demo-swap-item { height:22px; display:flex; align-items:center; font-family:var(--font-display); font-weight:700; font-style:italic; font-size:10px; color:rgba(255,255,255,0.7); padding:0 6px; position:relative; z-index:1; }
+.demo-swap-right { flex:1; position:relative; overflow:hidden; }
+.demo-swap-content { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:900; font-style:italic; font-size:13px; color:var(--sys-color-accent); text-align:center; line-height:1.1; padding:8px; }
+
+/* Diagonal wipe */
+@keyframes diag-wipe {
+  0%   { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+  40%  { clip-path: polygon(0 0, 120% 0, 100% 100%, 0 100%); }
+  60%  { clip-path: polygon(0 0, 120% 0, 100% 100%, 0 100%); }
+  100% { clip-path: polygon(100% 0, 120% 0, 120% 100%, 100% 100%); }
+}
+.demo-diag-base {
+  width: 100%; height: 100%;
+  background: var(--ref-navy-900);
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.demo-diag-overlay {
+  position: absolute; inset: 0;
+  background: var(--ref-blue-600);
+  animation: diag-wipe 2.4s cubic-bezier(0.4,0,0.2,1) infinite;
+}
+.demo-diag-text {
+  position: relative; z-index: 1;
+  font-family: var(--font-display);
+  font-weight: 900; font-style: italic;
+  font-size: 18px; color: white;
+}
+
+/* — Responsive — */
+@media (max-width: 600px) {
+  .doc-header, .section { padding-left: 0; padding-right: 0; }
+  .type-row { grid-template-columns: 1fr; gap: var(--sp-2); }
+  .sp-row { grid-template-columns: 60px 1fr; }
+  .sp-bar-wrap { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const items = ['01 WORKS', '02 ABOUT', '03 PLAYGROUND', '04 CONTACT'];
+  const container = document.getElementById('stagger-demo');
+  if (!container) return;
+
+  function runStagger() {
+    container.innerHTML = '';
+    items.forEach((text, i) => {
+      const el = document.createElement('div');
+      el.textContent = text;
+      el.style.cssText = `
+        font-family:'Barlow Condensed',sans-serif;
+        font-weight:800;font-style:italic;font-size:13px;
+        color:rgba(255,255,255,0.8);
+        text-align:right;
+        opacity:0;transform:translateX(12px);
+        transition:opacity 150ms ease, transform 200ms cubic-bezier(0.22,1,0.36,1);
+        transition-delay:${i * 80}ms;
+      `;
+      container.appendChild(el);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateX(0)';
+      }));
+    });
+  }
+
+  runStagger();
+  setInterval(runStagger, 2400);
+});
+</script>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="doc-eyebrow">◆ JADE — PORTFOLIO · 設計系統文件</div>
+  <h1 class="doc-title">DESIGN<br>PRINCIPLES</h1>
+  <p class="doc-sub">基於 Persona 3 Reload UI 語言萃取的設計原則與 Design Token 規範。本文件為開發作品集網站的視覺基礎。</p>
+</div>
+
+<!-- SECTION 1: PRINCIPLES -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">01</span>
+    <span class="section-title">Design Principles 設計原則</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <div class="principles-grid">
+
+    <div class="principle-card" data-num="01">
+      <span class="principle-tag">色彩</span>
+      <div class="principle-name-en">DUAL-TONE TENSION</div>
+      <div class="principle-name-zh">雙極張力</div>
+      <p class="principle-desc">深海軍藍（<strong>#080C22</strong>）與電光藍（<strong>#0F3BB8</strong>）以<strong>對角線銳利分割</strong>，比例約 45:55，無漸層過渡。兩色不調和，製造動態張力——深色代表沉穩身份，亮色代表積極選項。青色（<strong>#00C8FF</strong>）為唯一第三色，專屬互動狀態。</p>
+    </div>
+
+    <div class="principle-card" data-num="02">
+      <span class="principle-tag">字體</span>
+      <div class="principle-name-en">TYPE AS STRUCTURE</div>
+      <div class="principle-name-zh">文字即架構</div>
+      <p class="principle-desc">標題字（<strong>超粗斜體壓縮體</strong>）不只傳達資訊，而是版面的視覺骨架。「JADE」字高佔左側版面 40%，「WORKS」跨越頁面頂部 30%。字型永遠是 <strong>Italic + 800–900 weight + Condensed</strong>，三者缺一不可。</p>
+    </div>
+
+    <div class="principle-card" data-num="03">
+      <span class="principle-tag">造型</span>
+      <div class="principle-name-en">ZERO SOFTNESS</div>
+      <div class="principle-name-zh">銳角拒絕柔化</div>
+      <p class="principle-desc">系統中<strong>所有元件使用 0px border-radius</strong>。選取 highlight bar、卡片縮圖、分類標籤、按鈕——全部直角。唯一例外為濾鏡 tab 的 <strong>2px</strong> 微圓角。圓角在此設計語言中等於妥協，與整體強硬個性相悖。</p>
+    </div>
+
+    <div class="principle-card" data-num="04">
+      <span class="principle-tag">佈局</span>
+      <div class="principle-name-en">GAME-UI DENSITY</div>
+      <div class="principle-name-zh">遊戲級資訊密度</div>
+      <p class="principle-desc">間距基於 <strong>8px 網格</strong>，整體偏密集——選單項目間距 <strong>16–20px</strong>，版面邊距 <strong>32–48px</strong>。刻意不留過多呼吸感，製造「資訊豐富」的遊戲 UI 滿足感。空白是刻意節省的資源，而非預設的美學選擇。</p>
+    </div>
+
+    <div class="principle-card" data-num="05">
+      <span class="principle-tag">互動</span>
+      <div class="principle-name-en">ONE ACCENT ONLY</div>
+      <div class="principle-name-zh">唯一焦點色</div>
+      <p class="principle-desc">整個系統只有<strong>一個互動/選中顏色：青色 #00C8FF</strong>。它的出現即意味著「當前選中/活躍狀態」，從不用於裝飾。其他所有文字皆為純白或半透明白。青色的稀缺性使它的每次出現都有意義。</p>
+    </div>
+
+    <div class="principle-card" data-num="06">
+      <span class="principle-tag">層次</span>
+      <div class="principle-name-en">OPACITY HIERARCHY</div>
+      <div class="principle-name-zh">透明度決定層次</div>
+      <p class="principle-desc">層次感透過<strong>白色透明度</strong>建立，而非不同顏色。主文字 100%、次要文字 65%、輔助文字 40%、幽靈背景文字（大數字 01-06、PORTFOLIO 字樣）僅 <strong>8–12%</strong>。背景大字製造景深，從不搶奪視覺焦點。</p>
+    </div>
+
+    <div class="principle-card" data-num="07">
+      <span class="principle-tag">情境</span>
+      <div class="principle-name-en">TEMPORAL ANCHOR</div>
+      <div class="principle-name-zh">時間作為 UI</div>
+      <p class="principle-desc">右上角即時顯示<strong>日期、星期、時段</strong>（10/29 THU 午後·AFTERNOON），直接借鑑 P3R 的日曆系統。它強調「當下性」與個人化感，同時是版面右上角不可或缺的視覺錨點，讓靜態頁面具備動態感。</p>
+    </div>
+
+  </div>
+
+  <!-- Anti-slop rules -->
+  <div class="slop-note">
+    <div class="slop-title">⚠ Anti-AI Slop Rules — 必須避免</div>
+    <ul class="slop-list">
+      <li>禁止使用漸層背景（兩色之間無 gradient，只有銳利分割線）</li>
+      <li>禁止半透明卡片背景（backdrop-filter / frosted glass 效果）</li>
+      <li>禁止大於 2px 的圓角（特別是 rounded-lg、rounded-xl 完全禁止）</li>
+      <li>禁止多種強調色（只允許一種：青色 #00C8FF）</li>
+      <li>禁止過度使用卡片容器（卡片包卡片、陰影堆疊）</li>
+      <li>禁止居中排版的英雄區（JADE 名稱靠左對齊，非居中）</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 2: COLOR TOKENS -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">02</span>
+    <span class="section-title">Color Tokens 色彩系統</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <div class="token-section">
+    <div>
+      <div class="token-group-label">Reference Tokens — 原始層</div>
+      <div class="token-row">
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#080C22"></div>
+          <div class="token-info">
+            <span class="token-name">--ref-navy-900</span>
+            <span class="token-hex">#080C22</span>
+            <span class="token-role">最深背景</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#0A0F2A"></div>
+          <div class="token-info">
+            <span class="token-name">--ref-navy-800</span>
+            <span class="token-hex">#0A0F2A</span>
+            <span class="token-role">主背景</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#0D1540"></div>
+          <div class="token-info">
+            <span class="token-name">--ref-navy-700</span>
+            <span class="token-hex">#0D1540</span>
+            <span class="token-role">卡片背景</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#0F3BB8"></div>
+          <div class="token-info">
+            <span class="token-name">--ref-blue-600</span>
+            <span class="token-hex">#0F3BB8</span>
+            <span class="token-role">右側面板</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#2260F5"></div>
+          <div class="token-info">
+            <span class="token-name">--ref-blue-400</span>
+            <span class="token-hex">#2260F5</span>
+            <span class="token-role">亮藍高光</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#00C8FF"></div>
+          <div class="token-info">
+            <span class="token-name">--ref-cyan-400</span>
+            <span class="token-hex">#00C8FF</span>
+            <span class="token-role">焦點青色</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#E8003A"></div>
+          <div class="token-info">
+            <span class="token-name">--ref-red-500</span>
+            <span class="token-hex">#E8003A</span>
+            <span class="token-role">危險/警告</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="token-group-label">Semantic Tokens — 語意層</div>
+      <div class="token-row">
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#0A0F2A"></div>
+          <div class="token-info">
+            <span class="token-name">--sys-bg-primary</span>
+            <span class="token-hex">navy-800</span>
+            <span class="token-role">主頁面背景</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#0F3BB8"></div>
+          <div class="token-info">
+            <span class="token-name">--sys-bg-secondary</span>
+            <span class="token-hex">blue-600</span>
+            <span class="token-role">右側/次要面板</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:#00C8FF"></div>
+          <div class="token-info">
+            <span class="token-name">--sys-color-accent</span>
+            <span class="token-hex">cyan-400</span>
+            <span class="token-role">選中/互動狀態</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:rgba(255,255,255,0.65);border-color:rgba(255,255,255,0.2)"></div>
+          <div class="token-info">
+            <span class="token-name">--sys-color-text-secondary</span>
+            <span class="token-hex">white / 65%</span>
+            <span class="token-role">次要文字</span>
+          </div>
+        </div>
+        <div class="token-chip">
+          <div class="token-swatch" style="background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.2)"></div>
+          <div class="token-info">
+            <span class="token-name">--sys-color-text-ghost</span>
+            <span class="token-hex">white / 10%</span>
+            <span class="token-role">背景幽靈字</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: TYPOGRAPHY -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">03</span>
+    <span class="section-title">Typography 字體系統</span>
+    <span class="divider-line"></span>
+  </div>
+
+  <div class="type-scale">
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">DISPLAY / HERO</span>
+        <span class="type-spec">Barlow Condensed<br>900 Italic · 120–160px<br>line-height: 0.88</span>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:clamp(64px,10vw,120px);line-height:0.88;letter-spacing:-2px;color:var(--sys-color-text-primary)">JADE</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">PAGE TITLE</span>
+        <span class="type-spec">Barlow Condensed<br>900 Italic · 72–96px<br>line-height: 0.92</span>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:clamp(48px,7vw,80px);line-height:0.92;color:var(--sys-color-text-primary)">WORKS 作品</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">MENU / NAV</span>
+        <span class="type-spec">Barlow Condensed<br>800 Italic · 32–40px<br>line-height: 1.1</span>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-style:italic;font-size:clamp(28px,4vw,40px);line-height:1.1;color:var(--sys-color-text-primary)">PLAYGROUND 實驗場</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">DATE DISPLAY</span>
+        <span class="type-spec">Barlow Condensed<br>900 · 80–120px<br>letter-spacing: -3px</span>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(56px,8vw,96px);line-height:1;letter-spacing:-3px;color:var(--sys-color-text-primary)">10/29 <span style="font-size:0.35em;letter-spacing:0.05em;vertical-align:middle;background:var(--sys-color-accent);color:#080C22;padding:2px 8px">THU</span></div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">BADGE / TAG</span>
+        <span class="type-spec">Barlow Condensed<br>700 · 9–11px<br>letter-spacing: 0.18em</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;background:var(--sys-color-accent);color:#080C22;padding:2px 8px">GRAPHIC</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;border:1px solid var(--sys-color-accent);color:var(--sys-color-accent);padding:2px 8px">UI/UX</span>
+      </div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">BODY TEXT</span>
+        <span class="type-spec">Barlow / Noto Sans TC<br>400 · 14–15px<br>line-height: 1.65</span>
+      </div>
+      <div style="font-size:14px;color:var(--sys-color-text-secondary);max-width:400px">以平面設計為核心，延伸到介面與體驗設計。Graphic design rooted in visual systems, extended into interaction.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <span class="type-label">STATUS / CAPTION</span>
+        <span class="type-spec">Barlow Condensed<br>600 · 10–11px<br>letter-spacing: 0.15em</span>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--sys-color-text-muted)">▶ 移動游標選擇項目 · SELECT</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: SPACING -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">04</span>
+    <span class="section-title">Spacing 間距系統</span>
+    <span class="divider-line"></span>
+  </div>
+  <p style="font-size:13px;color:var(--sys-color-text-muted);margin-bottom:var(--sp-6)">基礎單位 4px，主要使用 8px 倍數。整體偏密集，刻意減少留白。</p>
+  <div class="spacing-scale">
+    <div class="sp-row"><span class="sp-name">--sp-2</span><div class="sp-bar-wrap"><div class="sp-bar" style="width:8px"></div></div><span class="sp-value">8px — 最小元件內間距、badge padding</span></div>
+    <div class="sp-row"><span class="sp-name">--sp-4</span><div class="sp-bar-wrap"><div class="sp-bar" style="width:16px"></div></div><span class="sp-value">16px — 選單項目間距、卡片內邊距</span></div>
+    <div class="sp-row"><span class="sp-name">--sp-5</span><div class="sp-bar-wrap"><div class="sp-bar" style="width:20px"></div></div><span class="sp-value">20px — 選單垂直間距</span></div>
+    <div class="sp-row"><span class="sp-name">--sp-6</span><div class="sp-bar-wrap"><div class="sp-bar" style="width:24px"></div></div><span class="sp-value">24px — 卡片 gap、元件群組間距</span></div>
+    <div class="sp-row"><span class="sp-name">--sp-8</span><div class="sp-bar-wrap"><div class="sp-bar" style="width:32px"></div></div><span class="sp-value">32px — 區塊間距、卡片格 gap</span></div>
+    <div class="sp-row"><span class="sp-name">--sp-12</span><div class="sp-bar-wrap"><div class="sp-bar" style="width:48px"></div></div><span class="sp-value">48px — 版面水平邊距（桌機）</span></div>
+    <div class="sp-row"><span class="sp-name">--sp-16</span><div class="sp-bar-wrap"><div class="sp-bar" style="width:64px"></div></div><span class="sp-value">64px — 區段垂直 padding</span></div>
+  </div>
+</div>
+
+<!-- SECTION 6: ANIMATION -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">06</span>
+    <span class="section-title">Motion Principles 動畫規範</span>
+    <span class="divider-line"></span>
+  </div>
+  <p style="font-size:13px;color:var(--sys-color-text-muted);margin-bottom:var(--sp-6)">從 GIF 1–3 分析確認的 P3R 動態語言。GIF 3 確認：選單游標移動時右側面板即時切換內容。所有動畫遵守 <code style="color:var(--sys-color-accent);font-size:11px">prefers-reduced-motion</code> 停用規則。</p>
+
+  <div class="anim-grid">
+
+    <div class="anim-card">
+      <div class="anim-demo" style="padding:0">
+        <div class="demo-cam-base">
+          <div class="demo-cam-bg"></div>
+          <div class="demo-cam-sidebar"></div>
+          <div class="demo-cam-overlay-text">PRESS<br>ANY<br>BUTTON</div>
+          <div class="demo-cam-menu">
+            <div class="demo-cam-menu-item">NEW GAME</div>
+            <div class="demo-cam-menu-item">LOAD GAME</div>
+            <div class="demo-cam-menu-item" style="color:var(--sys-color-accent)">CONFIG</div>
+            <div class="demo-cam-menu-item">CHANGE EPISODE</div>
+          </div>
+        </div>
+      </div>
+      <div class="anim-name">SCENE CAMERA SHIFT</div>
+      <div class="anim-spec">duration: 600–800ms · easing: cubic-bezier(0.4,0,0.2,1)</div>
+      <p class="anim-desc">GIF 2 確認：按下按鍵後視角平移＋縮放切換場景（<strong>非純黑切換</strong>），標題文字向外擴散溶解消失。場景穩定後，選單項目在<strong>右下角靠右依序出現</strong>（NEW GAME → LOAD GAME → CONFIG → CHANGE EPISODE），每項間隔約 80ms。</p>
+    </div>
+
+    <div class="anim-card">
+      <div class="anim-demo">
+        <div class="demo-bar-track">
+          <div class="demo-bar-fill"></div>
+          <span class="demo-bar-label">WORKS</span>
+        </div>
+      </div>
+      <div class="anim-name">PANEL BAR WIPE</div>
+      <div class="anim-spec">duration: 400ms · easing: cubic-bezier(0.4,0,0.2,1)</div>
+      <p class="anim-desc">GIF 1 確認：藍色色塊從左邊緣 scaleX 展開再收回，用於頁面載入或內容切換的覆蓋遮罩。速度快而確定。</p>
+    </div>
+
+    <div class="anim-card">
+      <div class="anim-demo">
+        <span class="demo-slam">PLAYGROUND</span>
+      </div>
+      <div class="anim-name">TEXT SLAM-IN</div>
+      <div class="anim-spec">duration: 200ms · easing: cubic-bezier(0.22,1,0.36,1)</div>
+      <p class="anim-desc">標題文字從上方位移 -12px + 微傾斜快速砸入，有輕微過衝（overshoot）再回正。給大字體「重量感」，配合超粗字型的視覺個性。</p>
+    </div>
+
+    <div class="anim-card">
+      <div class="anim-demo">
+        <div class="demo-menu">
+          <div class="demo-menu-cursor"></div>
+          <div class="demo-menu-item active" style="position:relative;z-index:1">▶ 01 WORKS</div>
+          <div class="demo-menu-item">02 ABOUT</div>
+          <div class="demo-menu-item">03 PLAYGROUND</div>
+        </div>
+      </div>
+      <div class="anim-name">MENU CURSOR SNAP</div>
+      <div class="anim-spec">duration: 80ms · timing: steps(1) 或 linear</div>
+      <p class="anim-desc">選取 highlight 在選單項目之間<strong>瞬間跳動</strong>，不滑動。模擬遊戲手柄的數位輸入感——沒有 transition，只有 snap。青色色塊整塊切換位置。</p>
+    </div>
+
+    <div class="anim-card">
+      <div class="anim-demo">
+        <div class="demo-diag-base">
+          <div class="demo-diag-overlay"></div>
+          <span class="demo-diag-text">JADE — PORTFOLIO</span>
+        </div>
+      </div>
+      <div class="anim-name">DIAGONAL WIPE</div>
+      <div class="anim-spec">duration: 500ms · clip-path 動畫</div>
+      <p class="anim-desc">斜向遮罩（clip-path polygon）從左掃到右，呼應首頁對角線分割版面的設計語言。用於頁面進入動畫或區塊出現時的視覺強調。</p>
+    </div>
+
+    <div class="anim-card">
+      <div class="anim-demo" style="flex-direction:column;gap:4px">
+        <div id="stagger-demo" style="display:flex;flex-direction:column;gap:6px;width:100%;padding:0 16px;align-items:flex-end"></div>
+      </div>
+      <div class="anim-name">SEQUENTIAL ITEM REVEAL</div>
+      <div class="anim-spec">delay: +80ms per item · translateX(12px)→0 · right-aligned</div>
+      <p class="anim-desc">GIF 2 確認：選單項目在右下角<strong>依序從右滑入</strong>，每項間隔 80ms，靠右對齊（text-align: right）。自上而下堆疊，配合 opacity 0→1 執行。對應 P3R 主選單 NEW GAME → LOAD GAME → CONFIG → CHANGE EPISODE 的逐項出現模式。</p>
+    </div>
+
+    <div class="anim-card">
+      <div class="anim-demo" style="padding:0">
+        <div class="demo-swap">
+          <div class="demo-swap-left">
+            <div class="demo-swap-cursor"></div>
+            <div class="demo-swap-item">01 WORKS</div>
+            <div class="demo-swap-item">02 ABOUT</div>
+            <div class="demo-swap-item">03 PLAYGROUND</div>
+            <div class="demo-swap-item">04 CONTACT</div>
+          </div>
+          <div class="demo-swap-right">
+            <div class="demo-swap-content" style="animation:swap-r0 2.4s steps(1) infinite">GRAPHIC<br>DESIGN</div>
+            <div class="demo-swap-content" style="animation:swap-r1 2.4s steps(1) infinite">UI/UX<br>DESIGN</div>
+            <div class="demo-swap-content" style="animation:swap-r2 2.4s steps(1) infinite">PLAY<br>GROUND</div>
+            <div class="demo-swap-content" style="animation:swap-r3 2.4s steps(1) infinite">GET IN<br>TOUCH</div>
+          </div>
+        </div>
+      </div>
+      <div class="anim-name">PANEL CONTENT SWAP</div>
+      <div class="anim-spec">timing: steps(1) · 即時切換 · 無 fade</div>
+      <p class="anim-desc">GIF 3 確認：游標移至不同列時，右側面板內容<strong>即時切換</strong>（steps(1)，無淡入淡出）。青色游標列整塊跳動，右側圖像與引言同步更換。體現遊戲 UI 的數位輸入感——選中即呈現，無過渡猶豫。</p>
+    </div>
+
+  </div>
+
+  <div style="margin-top:var(--sp-6);padding:var(--sp-4) var(--sp-6);background:rgba(0,200,255,0.05);border-left:2px solid var(--sys-color-accent)">
+    <div style="font-family:var(--font-display);font-weight:800;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--sys-color-accent);margin-bottom:var(--sp-3)">Animation Token 規範</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--sp-3)">
+      <div><code style="font-size:10px;color:var(--sys-color-accent)">--dur-snap</code><br><span style="font-size:12px;color:var(--sys-color-text-secondary)">80ms — 瞬間切換</span></div>
+      <div><code style="font-size:10px;color:var(--sys-color-accent)">--dur-fast</code><br><span style="font-size:12px;color:var(--sys-color-text-secondary)">150ms — 快速動作</span></div>
+      <div><code style="font-size:10px;color:var(--sys-color-accent)">--dur-base</code><br><span style="font-size:12px;color:var(--sys-color-text-secondary)">300ms — 標準轉場</span></div>
+      <div><code style="font-size:10px;color:var(--sys-color-accent)">--dur-enter</code><br><span style="font-size:12px;color:var(--sys-color-text-secondary)">500ms — 頁面進入</span></div>
+      <div><code style="font-size:10px;color:var(--sys-color-accent)">--ease-snap</code><br><span style="font-size:12px;color:var(--sys-color-text-secondary)">steps(1) — 數位跳動</span></div>
+      <div><code style="font-size:10px;color:var(--sys-color-accent)">--ease-out</code><br><span style="font-size:12px;color:var(--sys-color-text-secondary)">cubic-bezier(0.22,1,0.36,1)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: RADIUS -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">05</span>
+    <span class="section-title">Border Radius 圓角規範</span>
+    <span class="divider-line"></span>
+  </div>
+  <p style="font-size:13px;color:var(--sys-color-text-muted);margin-bottom:var(--sp-6)">銳角是這個設計系統的核心個性，圓角的使用被嚴格限制。</p>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius:0px"></div>
+      <div class="radius-label">PRIMARY</div>
+      <div class="radius-value">0px</div>
+      <div style="font-size:11px;color:var(--sys-color-text-muted);margin-top:4px">所有卡片、按鈕<br>選取 bar、標籤</div>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius:2px"></div>
+      <div class="radius-label">EXCEPTION</div>
+      <div class="radius-value">2px</div>
+      <div style="font-size:11px;color:var(--sys-color-text-muted);margin-top:4px">濾鏡 Tab（唯一<br>允許例外）</div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ── Design Token Section ── */
+.dt-flow{display:flex;align-items:stretch;gap:0;margin-bottom:var(--sp-8)}
+.dt-layer{flex:1;padding:var(--sp-5) var(--sp-6)}
+.dt-layer-ref {background:rgba(100,130,210,.06);border:1px solid rgba(100,130,210,.25)}
+.dt-layer-sys {background:rgba(0,200,255,.05);border:1px solid rgba(0,200,255,.25);border-left:none;border-right:none}
+.dt-layer-comp{background:rgba(160,100,240,.06);border:1px solid rgba(160,100,240,.25)}
+.dt-arrow{display:flex;align-items:center;padding:0 var(--sp-2);color:rgba(255,255,255,.2);font-size:18px;flex-shrink:0}
+.dt-layer-name{font-family:var(--font-display);font-weight:800;font-style:italic;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--sp-3)}
+.dt-layer-desc{font-size:11px;color:rgba(255,255,255,.45);line-height:1.6}
+.dt-layer-eg{margin-top:var(--sp-3);font-family:'Courier New',monospace;font-size:9px;color:rgba(255,255,255,.25);line-height:1.9}
+.dt-cat{margin-bottom:var(--sp-10)}
+.dt-cat-title{font-family:var(--font-display);font-weight:700;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:var(--sp-4);padding-bottom:var(--sp-2);border-bottom:1px solid rgba(255,255,255,.06)}
+.dt-table{width:100%;border-collapse:collapse}
+.dt-table td{padding:6px 8px;vertical-align:middle;border-bottom:1px solid rgba(255,255,255,.03);font-size:11px}
+.dt-table tr:last-child td{border-bottom:none}
+.dt-grp td{background:rgba(255,255,255,.02);font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:.16em;color:rgba(255,255,255,.25);text-transform:uppercase;padding:10px 8px 5px;border-bottom:1px solid rgba(255,255,255,.05)}
+.dt-badge{display:inline-block;font-family:var(--font-display);font-weight:700;font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:2px 5px;white-space:nowrap}
+.dt-badge-ref {background:rgba(100,130,210,.2);color:#8B9CC4;border:1px solid rgba(100,130,210,.4)}
+.dt-badge-sys {background:rgba(0,200,255,.1); color:#00C8FF;border:1px solid rgba(0,200,255,.3)}
+.dt-badge-comp{background:rgba(160,100,240,.1);color:#A78BFA;border:1px solid rgba(160,100,240,.3)}
+.dt-name{font-family:'Courier New',monospace;font-size:10px;color:rgba(255,255,255,.85)}
+.dt-val {font-family:'Courier New',monospace;font-size:10px;color:#A8E6CF}
+.dt-ref {font-family:'Courier New',monospace;font-size:10px;color:rgba(255,255,255,.35)}
+.dt-desc{font-size:10px;color:rgba(255,255,255,.4);line-height:1.5}
+.sw{display:inline-block;width:10px;height:10px;vertical-align:middle;margin-right:5px;flex-shrink:0;border:1px solid rgba(255,255,255,.15)}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--sp-4)}
+.comp-card{background:var(--sys-bg-card);border:1px solid rgba(255,255,255,.06);padding:var(--sp-5)}
+.comp-card-title{font-family:var(--font-display);font-weight:800;font-style:italic;font-size:14px;color:var(--sys-color-text-primary);margin-bottom:var(--sp-4);letter-spacing:.04em}
+.comp-token-row{display:flex;gap:var(--sp-2);align-items:baseline;margin-bottom:4px;flex-wrap:wrap}
+.comp-token-key{font-family:'Courier New',monospace;font-size:9px;color:rgba(160,100,240,.9);flex-shrink:0;min-width:120px}
+.comp-token-arrow{font-size:9px;color:rgba(255,255,255,.2);flex-shrink:0}
+.comp-token-ref{font-family:'Courier New',monospace;font-size:9px;color:rgba(0,200,255,.7)}
+</style>
+
+<!-- SECTION 07: DESIGN TOKENS -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">07</span>
+    <span class="section-title">Design Token 繼承架構</span>
+    <span class="divider-line"></span>
+  </div>
+  <p style="font-size:13px;color:var(--sys-color-text-muted);margin-bottom:var(--sp-8)">遵循 Google Material Design 3 三層繼承格式。每個設計決策只定義一次——修改 Ref 層數值，System 與 Component 自動繼承更新。</p>
+
+  <!-- 三層架構圖 -->
+  <div class="dt-flow" style="margin-bottom:var(--sp-10)">
+    <div class="dt-layer dt-layer-ref">
+      <div class="dt-layer-name" style="color:#8B9CC4">01 · Reference</div>
+      <div class="dt-layer-desc">原始值層。定義所有可用的原始設計資源——調色盤、字型名稱、像素數值。不帶語意，只是純粹的值。</div>
+      <div class="dt-layer-eg">--ref-palette-cyan80: #00C8FF<br>--ref-spacing-8: 8px<br>--ref-duration-80: 80ms</div>
+    </div>
+    <div class="dt-arrow">→</div>
+    <div class="dt-layer dt-layer-sys">
+      <div class="dt-layer-name" style="color:#00C8FF">02 · System</div>
+      <div class="dt-layer-desc">語意角色層。將原始值賦予設計意圖——「這是主要強調色」而非「這是 #00C8FF」。換主題只改這層。</div>
+      <div class="dt-layer-eg">--sys-color-primary: var(--ref-palette-cyan80)<br>--sys-gap-md: var(--ref-spacing-16)<br>--sys-motion-snap: 80ms steps(1)</div>
+    </div>
+    <div class="dt-arrow">→</div>
+    <div class="dt-layer dt-layer-comp">
+      <div class="dt-layer-name" style="color:#A78BFA">03 · Component</div>
+      <div class="dt-layer-desc">元件專屬層。每個 UI 元件明確宣告使用哪個 sys token，永不直接引用 ref 層原始值。</div>
+      <div class="dt-layer-eg">--comp-nav-active-bg: var(--sys-color-primary)<br>--comp-card-gap: var(--sys-gap-md)<br>--comp-cursor-dur: var(--sys-motion-snap)</div>
+    </div>
+  </div>
+
+  <!-- COLOR -->
+  <div class="dt-cat">
+    <div class="dt-cat-title">Color 色彩</div>
+    <table class="dt-table">
+      <tr class="dt-grp"><td colspan="4">Reference — 調色盤原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-navy0</span></td><td><span class="sw" style="background:#080C22"></span><span class="dt-val">#080C22</span></td><td class="dt-desc">最深海軍藍</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-navy10</span></td><td><span class="sw" style="background:#0A0F2A"></span><span class="dt-val">#0A0F2A</span></td><td class="dt-desc">主背景</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-navy20</span></td><td><span class="sw" style="background:#0D1540"></span><span class="dt-val">#0D1540</span></td><td class="dt-desc">卡片背景</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-blue40</span></td><td><span class="sw" style="background:#0F3BB8"></span><span class="dt-val">#0F3BB8</span></td><td class="dt-desc">亮藍面板</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-blue50</span></td><td><span class="sw" style="background:#1A4FE0"></span><span class="dt-val">#1A4FE0</span></td><td class="dt-desc">藍色中階</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-cyan80</span></td><td><span class="sw" style="background:#00C8FF"></span><span class="dt-val">#00C8FF</span></td><td class="dt-desc">電光青，唯一強調色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-cyan90</span></td><td><span class="sw" style="background:#4DD9FF"></span><span class="dt-val">#4DD9FF</span></td><td class="dt-desc">青色淺階</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-cyan95</span></td><td><span class="sw" style="background:#9EEAFF"></span><span class="dt-val">#9EEAFF</span></td><td class="dt-desc">青色最淺，soft state</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-white100</span></td><td><span class="sw" style="background:#fff"></span><span class="dt-val">#FFFFFF</span></td><td class="dt-desc">純白，文字基底</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-red40</span></td><td><span class="sw" style="background:#E8003A"></span><span class="dt-val">#E8003A</span></td><td class="dt-desc">錯誤 / 危險</td></tr>
+      <tr class="dt-grp"><td colspan="4">System — 語意角色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-background</span></td><td><span class="dt-ref">↳ navy10</span></td><td class="dt-desc">頁面底層背景</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-surface</span></td><td><span class="dt-ref">↳ navy20</span></td><td class="dt-desc">卡片 / 浮層表面</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-surface-variant</span></td><td><span class="dt-ref">↳ blue40</span></td><td class="dt-desc">對角線右側亮面板</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-primary</span></td><td><span class="dt-ref">↳ cyan80</span></td><td class="dt-desc">唯一強調色，互動 / 選中</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-primary-soft</span></td><td><span class="dt-ref">↳ cyan95</span></td><td class="dt-desc">hover soft state</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-on-bg</span></td><td><span class="dt-ref">↳ white100</span></td><td class="dt-desc">背景上主文字（100%）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-on-surface-secondary</span></td><td><span class="dt-val">rgba(255,255,255,.65)</span></td><td class="dt-desc">次要說明文字</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-on-surface-muted</span></td><td><span class="dt-val">rgba(255,255,255,.40)</span></td><td class="dt-desc">輔助標籤 / 描述</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-on-surface-ghost</span></td><td><span class="dt-val">rgba(255,255,255,.08)</span></td><td class="dt-desc">景深大字 / 幽靈背景</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-outline</span></td><td><span class="dt-val">rgba(255,255,255,.07)</span></td><td class="dt-desc">卡片細邊框</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-divider</span></td><td><span class="dt-ref">↳ cyan80</span></td><td class="dt-desc">章節分隔線（accent）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-error</span></td><td><span class="dt-ref">↳ red40</span></td><td class="dt-desc">錯誤狀態</td></tr>
+      <tr class="dt-grp"><td colspan="4">Component — 元件色彩用途</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-nav-active-bg</span></td><td><span class="dt-ref">↳ sys.color.primary</span></td><td class="dt-desc">nav 選中色塊底色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-nav-active-label</span></td><td><span class="dt-ref">↳ sys.color.background</span></td><td class="dt-desc">選中 nav 文字色（反色）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-nav-label</span></td><td><span class="dt-ref">↳ sys.color.on-surface-secondary</span></td><td class="dt-desc">未選 nav 文字色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-card-bg</span></td><td><span class="dt-ref">↳ sys.color.surface</span></td><td class="dt-desc">作品卡片底色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-card-border</span></td><td><span class="dt-ref">↳ sys.color.outline</span></td><td class="dt-desc">卡片邊框</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-badge-bg</span></td><td><span class="dt-ref">↳ sys.color.primary</span></td><td class="dt-desc">分類標籤底色（GRAPHIC / UI / UX）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-badge-label</span></td><td><span class="dt-ref">↳ sys.color.background</span></td><td class="dt-desc">標籤文字色（反色）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-filter-active-bg</span></td><td><span class="dt-ref">↳ sys.color.primary</span></td><td class="dt-desc">篩選 Tab 選中底色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-ghost-text-color</span></td><td><span class="dt-ref">↳ sys.color.on-surface-ghost</span></td><td class="dt-desc">背景景深大字（JADE / WORKS）</td></tr>
+    </table>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <div class="dt-cat">
+    <div class="dt-cat-title">Typography 字體</div>
+    <table class="dt-table">
+      <tr class="dt-grp"><td colspan="4">Reference — 字型原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-typeface-display</span></td><td><span class="dt-val">'Barlow Condensed'</span></td><td class="dt-desc">展示 / 標題字型</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-typeface-body</span></td><td><span class="dt-val">'Barlow'</span></td><td class="dt-desc">內文字型</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-typeface-cjk</span></td><td><span class="dt-val">'Noto Sans TC'</span></td><td class="dt-desc">中文補充字型</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-weight-black</span></td><td><span class="dt-val">900</span></td><td class="dt-desc">Hero 展示字重</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-weight-extrabold</span></td><td><span class="dt-val">800</span></td><td class="dt-desc">標題字重</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-weight-bold</span></td><td><span class="dt-val">700</span></td><td class="dt-desc">強調 / 標籤字重</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-weight-regular</span></td><td><span class="dt-val">400</span></td><td class="dt-desc">內文字重</td></tr>
+      <tr class="dt-grp"><td colspan="4">System — Type Scale 語意比例</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-typescale-display-hero</span></td><td><span class="dt-ref">display · 900i · clamp(80px,20vw,200px)</span></td><td class="dt-desc">JADE 名稱 Hero 字</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-typescale-display-page</span></td><td><span class="dt-ref">display · 900i · clamp(40px,7vw,72px)</span></td><td class="dt-desc">頁面大標題（WORKS 等）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-typescale-headline-lg</span></td><td><span class="dt-ref">display · 800i · 32px</span></td><td class="dt-desc">區塊標題</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-typescale-headline-md</span></td><td><span class="dt-ref">display · 800i · 22px</span></td><td class="dt-desc">章節名稱、nav 項目</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-typescale-label-lg</span></td><td><span class="dt-ref">display · 700 · 13px · ls .15em</span></td><td class="dt-desc">分類標籤、filter tab</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-typescale-label-sm</span></td><td><span class="dt-ref">display · 600 · 11px · ls .2em</span></td><td class="dt-desc">section 編號、eyebrow</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-typescale-body-md</span></td><td><span class="dt-ref">body · 400 · 15px · lh 1.6</span></td><td class="dt-desc">主要說明文字</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-typescale-body-sm</span></td><td><span class="dt-ref">body/cjk · 400 · 13px · lh 1.6</span></td><td class="dt-desc">輔助說明、卡片描述</td></tr>
+      <tr class="dt-grp"><td colspan="4">Component — 元件字體用途</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-hero-typescale</span></td><td><span class="dt-ref">↳ sys.typescale.display-hero</span></td><td class="dt-desc">首頁「JADE」</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-page-title-typescale</span></td><td><span class="dt-ref">↳ sys.typescale.display-page</span></td><td class="dt-desc">「WORKS 作品」頁面大標</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-nav-typescale</span></td><td><span class="dt-ref">↳ sys.typescale.headline-md</span></td><td class="dt-desc">導覽選單項目</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-card-title-typescale</span></td><td><span class="dt-ref">↳ sys.typescale.headline-md</span></td><td class="dt-desc">作品卡片標題</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-badge-typescale</span></td><td><span class="dt-ref">↳ sys.typescale.label-sm</span></td><td class="dt-desc">GRAPHIC / UI / UX 標籤</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-date-typescale</span></td><td><span class="dt-ref">↳ sys.typescale.label-sm</span></td><td class="dt-desc">右上角日期顯示</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-body-typescale</span></td><td><span class="dt-ref">↳ sys.typescale.body-md</span></td><td class="dt-desc">作品描述段落</td></tr>
+    </table>
+  </div>
+
+  <!-- SPACING -->
+  <div class="dt-cat">
+    <div class="dt-cat-title">Spacing 間距</div>
+    <table class="dt-table">
+      <tr class="dt-grp"><td colspan="4">Reference — 8px Grid 原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-4</span></td><td><span class="dt-val">4px</span></td><td class="dt-desc">½ unit</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-8</span></td><td><span class="dt-val">8px</span></td><td class="dt-desc">1× 基本單位</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-12</span></td><td><span class="dt-val">12px</span></td><td class="dt-desc">1.5×</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-16</span></td><td><span class="dt-val">16px</span></td><td class="dt-desc">2×</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-20</span></td><td><span class="dt-val">20px</span></td><td class="dt-desc">2.5×</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-24</span></td><td><span class="dt-val">24px</span></td><td class="dt-desc">3×</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-32</span></td><td><span class="dt-val">32px</span></td><td class="dt-desc">4×</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-48</span></td><td><span class="dt-val">48px</span></td><td class="dt-desc">6×</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-64</span></td><td><span class="dt-val">64px</span></td><td class="dt-desc">8×</td></tr>
+      <tr class="dt-grp"><td colspan="4">System — 語意間距角色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-gap-xs</span></td><td><span class="dt-ref">↳ spacing-4</span></td><td class="dt-desc">最小元件間距（badge padding、icon gap）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-gap-sm</span></td><td><span class="dt-ref">↳ spacing-8</span></td><td class="dt-desc">緊密排列</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-gap-md</span></td><td><span class="dt-ref">↳ spacing-16</span></td><td class="dt-desc">選單項目間距、卡片內邊距</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-gap-lg</span></td><td><span class="dt-ref">↳ spacing-24</span></td><td class="dt-desc">卡片 gap、元件群組間距</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-gap-xl</span></td><td><span class="dt-ref">↳ spacing-32</span></td><td class="dt-desc">區塊間距、格線 gap</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-padding-sm</span></td><td><span class="dt-ref">↳ spacing-16</span></td><td class="dt-desc">卡片內 padding</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-padding-md</span></td><td><span class="dt-ref">↳ spacing-24</span></td><td class="dt-desc">區塊中等 padding</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-padding-lg</span></td><td><span class="dt-ref">↳ spacing-48</span></td><td class="dt-desc">版面水平邊距（桌機）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-padding-xl</span></td><td><span class="dt-ref">↳ spacing-64</span></td><td class="dt-desc">區段垂直 padding</td></tr>
+      <tr class="dt-grp"><td colspan="4">Component — 元件間距用途</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-nav-item-height</span></td><td><span class="dt-val">36px</span></td><td class="dt-desc">導覽項目固定高度</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-nav-item-px</span></td><td><span class="dt-ref">↳ sys.gap-sm</span></td><td class="dt-desc">nav 水平內距</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-card-padding</span></td><td><span class="dt-ref">↳ sys.padding-sm</span></td><td class="dt-desc">作品卡片內邊距</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-card-grid-gap</span></td><td><span class="dt-ref">↳ sys.gap-xl</span></td><td class="dt-desc">三欄格線間距</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-section-px</span></td><td><span class="dt-ref">↳ sys.padding-lg</span></td><td class="dt-desc">頁面左右邊距</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-section-py</span></td><td><span class="dt-ref">↳ sys.padding-xl</span></td><td class="dt-desc">頁面上下 padding</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-badge-px</span></td><td><span class="dt-ref">↳ sys.gap-sm</span></td><td class="dt-desc">標籤水平內距</td></tr>
+    </table>
+  </div>
+
+  <!-- SHAPE -->
+  <div class="dt-cat">
+    <div class="dt-cat-title">Shape 形狀</div>
+    <table class="dt-table">
+      <tr class="dt-grp"><td colspan="4">Reference — 圓角原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-shape-none</span></td><td><span class="dt-val">0px</span></td><td class="dt-desc">完全銳角</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-shape-micro</span></td><td><span class="dt-val">2px</span></td><td class="dt-desc">極微圓角（唯一例外值）</td></tr>
+      <tr class="dt-grp"><td colspan="4">System — 語意形狀角色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-shape-sharp</span></td><td><span class="dt-ref">↳ shape-none</span></td><td class="dt-desc">系統預設，全部元件使用</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-shape-accent</span></td><td><span class="dt-ref">↳ shape-micro</span></td><td class="dt-desc">唯一允許的例外形狀</td></tr>
+      <tr class="dt-grp"><td colspan="4">Component — 元件形狀用途</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-card-shape</span></td><td><span class="dt-ref">↳ sys.shape.sharp</span></td><td class="dt-desc">作品卡片（0px）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-badge-shape</span></td><td><span class="dt-ref">↳ sys.shape.sharp</span></td><td class="dt-desc">分類標籤（0px）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-nav-shape</span></td><td><span class="dt-ref">↳ sys.shape.sharp</span></td><td class="dt-desc">nav highlight bar（0px）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-filter-tab-shape</span></td><td><span class="dt-ref">↳ sys.shape.accent</span></td><td class="dt-desc">篩選 Tab（2px，唯一例外）</td></tr>
+    </table>
+  </div>
+
+  <!-- MOTION -->
+  <div class="dt-cat">
+    <div class="dt-cat-title">Motion 動畫</div>
+    <table class="dt-table">
+      <tr class="dt-grp"><td colspan="4">Reference — Duration &amp; Easing 原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-duration-80</span></td><td><span class="dt-val">80ms</span></td><td class="dt-desc">snap 最短時長</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-duration-150</span></td><td><span class="dt-val">150ms</span></td><td class="dt-desc">快速互動回饋</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-duration-200</span></td><td><span class="dt-val">200ms</span></td><td class="dt-desc">標準動作時長</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-duration-400</span></td><td><span class="dt-val">400ms</span></td><td class="dt-desc">版面過渡</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-duration-600</span></td><td><span class="dt-val">600ms</span></td><td class="dt-desc">場景切換（camera shift）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-easing-snap</span></td><td><span class="dt-val">steps(1)</span></td><td class="dt-desc">數位跳動，無過渡</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-easing-expressive</span></td><td><span class="dt-val">cubic-bezier(0.22,1,0.36,1)</span></td><td class="dt-desc">彈性過衝曲線</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-easing-standard</span></td><td><span class="dt-val">cubic-bezier(0.4,0,0.2,1)</span></td><td class="dt-desc">Material 標準曲線</td></tr>
+      <tr class="dt-grp"><td colspan="4">System — 語意動畫角色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-motion-snap</span></td><td><span class="dt-ref">80ms + steps(1)</span></td><td class="dt-desc">游標跳動 / 面板即時切換</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-motion-fast</span></td><td><span class="dt-ref">150ms + easing-standard</span></td><td class="dt-desc">hover、快速回饋</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-motion-base</span></td><td><span class="dt-ref">200ms + easing-expressive</span></td><td class="dt-desc">文字砸入、標準動畫</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-motion-enter</span></td><td><span class="dt-ref">400ms + easing-standard</span></td><td class="dt-desc">元件進場 / diagonal wipe</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-motion-scene</span></td><td><span class="dt-ref">600ms + easing-standard</span></td><td class="dt-desc">頁面場景切換</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-motion-stagger-delay</span></td><td><span class="dt-ref">80ms / item</span></td><td class="dt-desc">sequential reveal 每項延遲</td></tr>
+      <tr class="dt-grp"><td colspan="4">Component — 元件動畫用途</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-nav-cursor-motion</span></td><td><span class="dt-ref">↳ sys.motion.snap</span></td><td class="dt-desc">nav highlight bar 跳動</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-panel-swap-motion</span></td><td><span class="dt-ref">↳ sys.motion.snap</span></td><td class="dt-desc">右側面板內容即時切換</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-text-slam-motion</span></td><td><span class="dt-ref">↳ sys.motion.base</span></td><td class="dt-desc">標題文字砸入</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-page-enter-motion</span></td><td><span class="dt-ref">↳ sys.motion.enter</span></td><td class="dt-desc">頁面進場 diagonal wipe</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-scene-shift-motion</span></td><td><span class="dt-ref">↳ sys.motion.scene</span></td><td class="dt-desc">場景視角切換</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-list-item-stagger</span></td><td><span class="dt-ref">↳ sys.motion.stagger-delay</span></td><td class="dt-desc">選單項目逐一進場延遲</td></tr>
+    </table>
+  </div>
+
+  <!-- COMPONENT SUMMARY -->
+  <div class="dt-cat" style="margin-bottom:0">
+    <div class="dt-cat-title">Component Token 元件彙整</div>
+    <p style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:var(--sp-6)">每個核心 UI 元件的完整 token 宣告，全部引用 sys 層，不直接使用 ref 原始值。</p>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-card-title">NAV ITEM 導覽項目</div>
+        <div class="comp-token-row"><span class="comp-token-key">height</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">36px</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">label.typescale</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.typescale.headline-md</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">label.color</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.on-surface-secondary</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">active.bg</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.primary</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">active.label</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.background</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">shape</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.shape.sharp</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">transition</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.motion.snap</span></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-title">WORK CARD 作品卡片</div>
+        <div class="comp-token-row"><span class="comp-token-key">bg</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.surface</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">border.color</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.outline</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">border.width</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">1px</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">shape</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.shape.sharp</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">padding</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.padding.sm</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">title.typescale</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.typescale.headline-md</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">ghost-num.color</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.on-surface-ghost</span></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-title">CATEGORY BADGE 分類標籤</div>
+        <div class="comp-token-row"><span class="comp-token-key">bg</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.primary</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">label.color</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.background</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">label.typescale</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.typescale.label-sm</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">shape</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.shape.sharp</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">padding.x</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.gap.sm</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">padding.y</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.gap.xs</span></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-title">FILTER TAB 篩選標籤</div>
+        <div class="comp-token-row"><span class="comp-token-key">shape</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.shape.accent（唯一 2px 例外）</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">active.bg</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.primary</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">active.label</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.background</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">inactive.label</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.on-surface-secondary</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">label.typescale</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.typescale.label-lg</span></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-title">DATE DISPLAY 時間顯示</div>
+        <div class="comp-token-row"><span class="comp-token-key">label.typescale</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.typescale.label-sm</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">label.color</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.on-surface-muted</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">value.color</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.on-bg</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">accent.color</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.primary</span></div>
+      </div>
+      <div class="comp-card">
+        <div class="comp-card-title">DIAGONAL PANEL 對角分割</div>
+        <div class="comp-token-row"><span class="comp-token-key">dark.bg</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.background</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">light.bg</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">sys.color.surface-variant</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">split.clip-path</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">polygon(0 0,45% 0,51% 100%,0 100%)</span></div>
+        <div class="comp-token-row"><span class="comp-token-key">ratio</span><span class="comp-token-arrow">→</span><span class="comp-token-ref">45:55</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ── Section 08 ── */
+.naming-formula{display:flex;align-items:center;gap:0;flex-wrap:wrap;font-family:'Courier New',monospace;font-size:13px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.07);padding:16px 20px;margin-bottom:var(--sp-6)}
+.ns{padding:4px 7px;margin:2px 1px}
+.ns-fixed{background:rgba(100,130,210,.18);color:#8B9CC4;border:1px solid rgba(100,130,210,.35)}
+.ns-comp{background:rgba(0,200,255,.1);color:#00C8FF;border:1px solid rgba(0,200,255,.3)}
+.ns-slot{background:rgba(160,200,100,.08);color:#A8D87A;border:1px solid rgba(160,200,100,.25)}
+.ns-opt{background:rgba(255,180,50,.06);color:#F0B866;border:1px solid rgba(255,180,50,.2)}
+.ns-state{background:rgba(240,100,120,.08);color:#F08090;border:1px solid rgba(240,100,120,.25)}
+.ns-sep{color:rgba(255,255,255,.2);padding:0 1px;font-size:14px}
+.ns-opt-label{font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.25);text-transform:uppercase;margin-left:3px;vertical-align:super}
+.naming-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--sp-3);margin-bottom:var(--sp-8)}
+.legend-row{display:flex;align-items:baseline;gap:8px;font-size:11px}
+.legend-tag{font-family:'Courier New',monospace;font-size:9px;padding:2px 6px;white-space:nowrap}
+.legend-desc{color:rgba(255,255,255,.5);line-height:1.5}
+.state-section-title{font-family:var(--font-display);font-weight:700;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.22);padding:8px 8px 4px;background:rgba(255,255,255,.015);border-bottom:1px solid rgba(255,255,255,.04)}
+
+/* Button Demo */
+.btn-demo-wrap{display:flex;gap:var(--sp-6);align-items:flex-start;flex-wrap:wrap;margin-top:var(--sp-6)}
+.btn-demo-item{display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-3)}
+.btn-state-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);font-family:var(--font-display);font-weight:600}
+.demo-btn-primary{
+  --comp-btn-primary-bg: var(--sys-color-accent);
+  --comp-btn-primary-label-color: var(--sys-bg-page);
+  --comp-btn-primary-shape: 0px;
+  --comp-btn-primary-height: 36px;
+  --comp-btn-primary-padding-x: 16px;
+  display:inline-flex;align-items:center;
+  background:var(--comp-btn-primary-bg);
+  color:var(--comp-btn-primary-label-color);
+  height:var(--comp-btn-primary-height);
+  padding:0 var(--comp-btn-primary-padding-x);
+  border-radius:var(--comp-btn-primary-shape);
+  font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:.15em;text-transform:uppercase;
+  border:none;cursor:pointer;white-space:nowrap;
+}
+.demo-btn-state-hover{background:#9EEAFF}
+.demo-btn-state-pressed{background:var(--sys-color-accent);opacity:.75;transform:scale(.96)}
+.demo-btn-state-disabled{background:rgba(255,255,255,.08);color:rgba(255,255,255,.3);cursor:not-allowed}
+.demo-btn-state-focus{background:var(--sys-color-accent);outline:2px solid var(--sys-color-accent);outline-offset:2px}
+
+/* Checklist */
+.checklist-steps{counter-reset:step;display:flex;flex-direction:column;gap:var(--sp-3)}
+.checklist-step{display:flex;gap:var(--sp-4);align-items:flex-start;padding:var(--sp-3) var(--sp-4);background:rgba(255,255,255,.02);border-left:2px solid rgba(0,200,255,.25)}
+.step-num{font-family:var(--font-display);font-weight:900;font-style:italic;font-size:20px;color:rgba(0,200,255,.4);line-height:1;flex-shrink:0;width:24px}
+.step-body{flex:1}
+.step-title{font-family:var(--font-display);font-weight:700;font-size:13px;color:rgba(255,255,255,.85);margin-bottom:4px;letter-spacing:.04em}
+.step-desc{font-size:11px;color:rgba(255,255,255,.4);line-height:1.6}
+.step-code{font-family:'Courier New',monospace;font-size:9px;color:#A8E6CF;display:block;margin-top:6px;line-height:1.9}
+</style>
+
+<!-- SECTION 08: COMPONENT 開發方法 -->
+<div class="section">
+  <div class="section-label">
+    <span class="section-num">08</span>
+    <span class="section-title">Component 開發方法 &amp; Primary Button</span>
+    <span class="divider-line"></span>
+  </div>
+  <p style="font-size:13px;color:var(--sys-color-text-muted);margin-bottom:var(--sp-8)">Token 命名規則 + Primary Button 作為完整範本。未來每個新元件皆依此方法建立。</p>
+
+  <!-- NAMING CONVENTION -->
+  <div style="margin-bottom:var(--sp-10)">
+    <div class="dt-cat-title">Token 命名規則</div>
+    <div class="naming-formula">
+      <span class="ns ns-fixed">--comp</span>
+      <span class="ns-sep">-</span>
+      <span class="ns ns-comp">{component}</span>
+      <span class="ns-sep">-</span>
+      <span class="ns ns-slot">{slot}</span>
+      <span class="ns-sep">[-</span>
+      <span class="ns ns-opt">{variant}</span>
+      <span class="ns-opt-label">optional</span>
+      <span class="ns-sep">][-</span>
+      <span class="ns ns-state">{state}</span>
+      <span class="ns-opt-label">optional</span>
+      <span class="ns-sep">]</span>
+    </div>
+    <div class="naming-legend">
+      <div class="legend-row"><span class="legend-tag ns-fixed" style="background:rgba(100,130,210,.18);color:#8B9CC4;border:1px solid rgba(100,130,210,.35)">--comp</span><span class="legend-desc">固定前綴，宣告這是 Component Token 層</span></div>
+      <div class="legend-row"><span class="legend-tag ns-comp" style="background:rgba(0,200,255,.1);color:#00C8FF;border:1px solid rgba(0,200,255,.3)">{component}</span><span class="legend-desc">元件識別碼，kebab-case。如 <code style="font-size:9px;color:rgba(255,255,255,.5)">btn-primary</code>、<code style="font-size:9px;color:rgba(255,255,255,.5)">nav-item</code>、<code style="font-size:9px;color:rgba(255,255,255,.5)">work-card</code></span></div>
+      <div class="legend-row"><span class="legend-tag ns-slot" style="background:rgba(160,200,100,.08);color:#A8D87A;border:1px solid rgba(160,200,100,.25)">{slot}</span><span class="legend-desc">視覺插槽，描述元件哪個部位的哪個屬性。如 <code style="font-size:9px;color:rgba(255,255,255,.5)">bg</code>、<code style="font-size:9px;color:rgba(255,255,255,.5)">label-color</code>、<code style="font-size:9px;color:rgba(255,255,255,.5)">shape</code>、<code style="font-size:9px;color:rgba(255,255,255,.5)">padding-x</code>、<code style="font-size:9px;color:rgba(255,255,255,.5)">height</code></span></div>
+      <div class="legend-row"><span class="legend-tag ns-opt" style="background:rgba(255,180,50,.06);color:#F0B866;border:1px solid rgba(255,180,50,.2)">{variant}</span><span class="legend-desc">可選，元件變體。如 <code style="font-size:9px;color:rgba(255,255,255,.5)">outlined</code>、<code style="font-size:9px;color:rgba(255,255,255,.5)">ghost</code>、<code style="font-size:9px;color:rgba(255,255,255,.5)">secondary</code>。無變體時省略</span></div>
+      <div class="legend-row"><span class="legend-tag ns-state" style="background:rgba(240,100,120,.08);color:#F08090;border:1px solid rgba(240,100,120,.25)">{state}</span><span class="legend-desc">可選，互動狀態後綴。<code style="font-size:9px;color:rgba(255,255,255,.5)">hover</code> / <code style="font-size:9px;color:rgba(255,255,255,.5)">pressed</code> / <code style="font-size:9px;color:rgba(255,255,255,.5)">focus</code> / <code style="font-size:9px;color:rgba(255,255,255,.5)">disabled</code> / <code style="font-size:9px;color:rgba(255,255,255,.5)">active</code>。預設態省略</span></div>
+    </div>
+    <div style="font-size:11px;color:rgba(255,255,255,.28);padding:10px 12px;background:rgba(0,200,255,.03);border-left:2px solid rgba(0,200,255,.2)">
+      規則：<strong style="color:rgba(255,255,255,.6)">Component Token 只能引用 sys 層</strong>，永遠不直接使用 ref 原始值。sys 層改一次，所有引用該 sys token 的元件自動更新。
+    </div>
+  </div>
+
+  <!-- PRIMARY BUTTON TOKEN TABLE -->
+  <div class="dt-cat">
+    <div class="dt-cat-title">Primary Button — 完整 Token 繼承表</div>
+    <table class="dt-table">
+      <tr class="dt-grp"><td colspan="4">Reference 層 — 原始值（源自 Section 07 已定義）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-cyan80</span></td><td><span class="sw" style="background:#00C8FF"></span><span class="dt-val">#00C8FF</span></td><td class="dt-desc">按鈕底色原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-cyan95</span></td><td><span class="sw" style="background:#9EEAFF"></span><span class="dt-val">#9EEAFF</span></td><td class="dt-desc">hover 淺青原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-palette-navy10</span></td><td><span class="sw" style="background:#0A0F2A"></span><span class="dt-val">#0A0F2A</span></td><td class="dt-desc">反色文字原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-spacing-16</span></td><td><span class="dt-val">16px</span></td><td class="dt-desc">水平內距原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-shape-none</span></td><td><span class="dt-val">0px</span></td><td class="dt-desc">銳角邊框原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-duration-150</span></td><td><span class="dt-val">150ms</span></td><td class="dt-desc">快速互動時長原始值</td></tr>
+      <tr><td><span class="dt-badge dt-badge-ref">REF</span></td><td><span class="dt-name">--ref-easing-standard</span></td><td><span class="dt-val">cubic-bezier(0.4,0,0.2,1)</span></td><td class="dt-desc">標準曲線原始值</td></tr>
+
+      <tr class="dt-grp"><td colspan="4">System 層 — 語意角色（源自 Section 07 已定義）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-primary</span></td><td><span class="dt-ref">↳ ref.palette.cyan80</span></td><td class="dt-desc">主要強調色，按鈕底色語意</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-primary-soft</span></td><td><span class="dt-ref">↳ ref.palette.cyan95</span></td><td class="dt-desc">soft hover state 語意</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-color-background</span></td><td><span class="dt-ref">↳ ref.palette.navy10</span></td><td class="dt-desc">反色文字語意</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-gap-md</span></td><td><span class="dt-ref">↳ ref.spacing-16</span></td><td class="dt-desc">水平間距語意</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-shape-sharp</span></td><td><span class="dt-ref">↳ ref.shape-none</span></td><td class="dt-desc">銳角形狀語意</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-motion-fast</span></td><td><span class="dt-ref">↳ 150ms + ref.easing-standard</span></td><td class="dt-desc">快速互動語意</td></tr>
+      <tr><td><span class="dt-badge dt-badge-sys">SYS</span></td><td><span class="dt-name">--sys-typescale-label-lg</span></td><td><span class="dt-ref">↳ display · 700 · 13px · ls .15em</span></td><td class="dt-desc">標籤文字比例語意</td></tr>
+
+      <tr class="dt-grp" style="background:rgba(160,100,240,.05)"><td colspan="4">Component 層 — btn-primary · 預設態（Default）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-bg</span></td><td><span class="dt-ref">↳ sys.color.primary</span></td><td class="dt-desc">底色</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-label-color</span></td><td><span class="dt-ref">↳ sys.color.background</span></td><td class="dt-desc">文字色（反色，確保對比）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-label-typescale</span></td><td><span class="dt-ref">↳ sys.typescale.label-lg</span></td><td class="dt-desc">文字比例</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-shape</span></td><td><span class="dt-ref">↳ sys.shape.sharp</span></td><td class="dt-desc">邊框圓角（0px）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-height</span></td><td><span class="dt-val">36px</span></td><td class="dt-desc">固定高度，對齊 nav-item-height</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-padding-x</span></td><td><span class="dt-ref">↳ sys.gap.md</span></td><td class="dt-desc">水平內距</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-transition</span></td><td><span class="dt-ref">↳ sys.motion.fast</span></td><td class="dt-desc">狀態切換過渡</td></tr>
+
+      <tr class="dt-grp" style="background:rgba(160,100,240,.05)"><td colspan="4">Component 層 — btn-primary · 懸停態（Hover）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-hover-bg</span></td><td><span class="dt-ref">↳ sys.color.primary-soft</span></td><td class="dt-desc">hover 底色淡化，保持可識別性</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-hover-label-color</span></td><td><span class="dt-ref">↳ sys.color.background</span></td><td class="dt-desc">hover 文字色（同預設，維持反色）</td></tr>
+
+      <tr class="dt-grp" style="background:rgba(160,100,240,.05)"><td colspan="4">Component 層 — btn-primary · 按壓態（Pressed）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-pressed-scale</span></td><td><span class="dt-val">0.96</span></td><td class="dt-desc">縮小反饋，強化「被按下」感</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-pressed-opacity</span></td><td><span class="dt-val">0.75</span></td><td class="dt-desc">亮度下壓，搭配 scale 強化觸感</td></tr>
+
+      <tr class="dt-grp" style="background:rgba(160,100,240,.05)"><td colspan="4">Component 層 — btn-primary · 焦點態（Focus）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-focus-ring-color</span></td><td><span class="dt-ref">↳ sys.color.primary</span></td><td class="dt-desc">focus outline 顏色（鍵盤導覽可視化）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-focus-ring-offset</span></td><td><span class="dt-val">2px</span></td><td class="dt-desc">outline 與元件邊緣間距</td></tr>
+
+      <tr class="dt-grp" style="background:rgba(160,100,240,.05)"><td colspan="4">Component 層 — btn-primary · 停用態（Disabled）</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-disabled-bg</span></td><td><span class="dt-val">rgba(255,255,255,.08)</span></td><td class="dt-desc">底色退出強調，不引用 sys.primary</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-disabled-label-color</span></td><td><span class="dt-val">rgba(255,255,255,.30)</span></td><td class="dt-desc">文字退色，低對比表示不可用</td></tr>
+      <tr><td><span class="dt-badge dt-badge-comp">COMP</span></td><td><span class="dt-name">--comp-btn-primary-disabled-cursor</span></td><td><span class="dt-val">not-allowed</span></td><td class="dt-desc">游標樣式（無需引用 sys 層）</td></tr>
+    </table>
+  </div>
+
+  <!-- LIVE DEMO -->
+  <div class="dt-cat">
+    <div class="dt-cat-title">狀態示意</div>
+    <div class="btn-demo-wrap">
+      <div class="btn-demo-item">
+        <div class="demo-btn-primary">CONFIRM</div>
+        <div class="btn-state-label">Default</div>
+      </div>
+      <div class="btn-demo-item">
+        <div class="demo-btn-primary demo-btn-state-hover">CONFIRM</div>
+        <div class="btn-state-label">Hover</div>
+      </div>
+      <div class="btn-demo-item">
+        <div class="demo-btn-primary demo-btn-state-pressed">CONFIRM</div>
+        <div class="btn-state-label">Pressed</div>
+      </div>
+      <div class="btn-demo-item">
+        <div class="demo-btn-primary demo-btn-state-focus">CONFIRM</div>
+        <div class="btn-state-label">Focus</div>
+      </div>
+      <div class="btn-demo-item">
+        <div class="demo-btn-primary demo-btn-state-disabled">CONFIRM</div>
+        <div class="btn-state-label">Disabled</div>
+      </div>
+    </div>
+    <div style="margin-top:var(--sp-5);font-size:10px;color:rgba(255,255,255,.25);font-family:'Courier New',monospace;line-height:2">
+      .btn:hover { background: var(--comp-btn-primary-hover-bg); }<br>
+      .btn:active { transform: scale(var(--comp-btn-primary-pressed-scale)); opacity: var(--comp-btn-primary-pressed-opacity); }<br>
+      .btn:focus-visible { outline: 2px solid var(--comp-btn-primary-focus-ring-color); outline-offset: var(--comp-btn-primary-focus-ring-offset); }<br>
+      .btn:disabled { background: var(--comp-btn-primary-disabled-bg); color: var(--comp-btn-primary-disabled-label-color); }
+    </div>
+  </div>
+
+  <!-- CHECKLIST FOR NEW COMPONENTS -->
+  <div class="dt-cat" style="margin-bottom:0">
+    <div class="dt-cat-title">新元件開發 Checklist</div>
+    <p style="font-size:11px;color:rgba(255,255,255,.35);margin-bottom:var(--sp-5)">每個新元件進行 Token 定義時，依序完成以下四步驟。</p>
+    <div class="checklist-steps">
+      <div class="checklist-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">確認 sys 層是否有對應值</div>
+          <div class="step-desc">先查 Section 07 的 System Token 表。若語意角色已存在（如 sys.color.primary），直接引用，不建立新的 ref token。</div>
+          <span class="step-code">✓ 已有 sys.gap.md → 直接用，不另建 --ref-spacing-16-for-button</span>
+        </div>
+      </div>
+      <div class="checklist-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">建立 comp token，引用 sys（不用 ref）</div>
+          <div class="step-desc">格式嚴格遵守：<code style="font-size:9px;color:#A8E6CF">--comp-{component}-{slot}[-{state}]</code>。slot 名稱用 kebab-case，語意清晰（bg、label-color、shape、height）。</div>
+          <span class="step-code">✓ --comp-tag-bg: var(--sys-color-primary)&nbsp;&nbsp; ✗ --comp-tag-bg: #00C8FF</span>
+        </div>
+      </div>
+      <div class="checklist-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">定義所有互動狀態</div>
+          <div class="step-desc">預設態省略 state 後綴。其餘狀態依需求加後綴：<code style="font-size:9px;color:#F08090">-hover</code> / <code style="font-size:9px;color:#F08090">-pressed</code> / <code style="font-size:9px;color:#F08090">-focus</code> / <code style="font-size:9px;color:#F08090">-disabled</code> / <code style="font-size:9px;color:#F08090">-active</code>。</div>
+          <span class="step-code">--comp-tag-bg（default）· --comp-tag-hover-bg · --comp-tag-disabled-bg</span>
+        </div>
+      </div>
+      <div class="checklist-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">對齊系統設計決策</div>
+          <div class="step-desc">shape 永遠引用 sys.shape.sharp（0px），除非是 filter-tab 的唯一例外（sys.shape.accent = 2px）。不引入新的圓角值。motion 統一引用 sys.motion 層。</div>
+          <span class="step-code">✓ shape: var(--sys-shape-sharp)&nbsp;&nbsp; ✗ border-radius: 4px（不允許）</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
